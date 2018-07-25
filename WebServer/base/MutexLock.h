@@ -4,7 +4,7 @@
 #include "noncopyable.h"
 #include <pthread.h>
 #include <cstdio>
-
+//mutex的封装
 class MutexLock: noncopyable
 {
 public:
@@ -37,7 +37,7 @@ private:
     friend class Condition;
 };
 
-
+//对锁进行进一步封装，防止lock和unlock期间跳出函数导致死锁
 class MutexLockGuard: noncopyable
 {
 public:

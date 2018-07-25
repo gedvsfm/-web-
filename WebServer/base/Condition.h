@@ -4,7 +4,6 @@
 #include "noncopyable.h"
 #include "MutexLock.h"
 #include <pthread.h>
-#include <pthread.h>
 #include <errno.h>
 #include <cstdint>
 #include <time.h>
@@ -12,35 +11,36 @@
 class Condition: noncopyable
 {
 public:
-    explicit Condition(MutexLock &_mutex):
-        mutex(_mutex)
+    explicit Condition(MutexLock &mutex):
+        mutex_(mutex)
     {
-        pthread_cond_init(&cond, NULL);
+        pthread_cond_init(&pcond_, NULL);
     }
     ~Condition()
     {
-        pthread_cond_destroy(&cond);
+        pthread_cond_destroy(&pcond_);
     }
     void wait()
     {
-        pthread_cond_wait(&cond, mutex.get());
-    }
-    void notify()
-    {
-        pthread_cond_signal(&cond);
-    }
-    void notifyAll()
-    {
-        pthread_cond_broadcast(&cond);
-    }
+        pthread_cond_wait(&pcond_, mutex_.get());
+    }    
+	//如果超时返回true，否则返回false
     bool waitForSeconds(int seconds)
     {
         struct timespec abstime;
         clock_gettime(CLOCK_REALTIME, &abstime);
         abstime.tv_sec += static_cast<time_t>(seconds);
-        return ETIMEDOUT == pthread_cond_timedwait(&cond, mutex.get(), &abstime);
+        return ETIMEDOUT == pthread_cond_timedwait(&pcond_, mutex_.get(), &abstime);
+    }
+	void notify()
+    {
+        pthread_cond_signal(&pcond_);
+    }
+    void notifyAll()
+    {
+        pthread_cond_broadcast(&pcond_);
     }
 private:
-    MutexLock &mutex;
-    pthread_cond_t cond;
+    MutexLock& mutex_;
+    pthread_cond_t pcond_;
 };
