@@ -204,13 +204,13 @@ int setSocketNonBlocking(int fd)
     return 0;
 }
 
-void setSocketNodelay(int fd) 
+void setSocketNodelay(int fd) //不使用Nagle算法
 {
     int enable = 1;
     setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (void*)&enable, sizeof(enable));
 }
 
-void setSocketNoLinger(int fd) 
+void setSocketNoLinger(int fd) //延迟关闭连接,将数据发送完
 {
     struct linger linger_;
     linger_.l_onoff = 1;
@@ -221,7 +221,6 @@ void setSocketNoLinger(int fd)
 void shutDownWR(int fd)
 {
     shutdown(fd, SHUT_WR);
-    //printf("shutdown\n");
 }
 
 int socket_bind_listen(int port)

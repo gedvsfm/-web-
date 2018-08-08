@@ -20,9 +20,9 @@ private:
     typedef std::function<void()> CallBack;
     EventLoop *loop_;
     int fd_;
-    __uint32_t events_;
-    __uint32_t revents_;
-    __uint32_t lastEvents_;
+    __uint32_t events_;	//关注的事件
+    __uint32_t revents_;//epoll返回的事件
+    __uint32_t lastEvents_;//上一次返回的事件
 
     // 方便找到上层持有该Channel的对象
     std::weak_ptr<HttpData> holder_;

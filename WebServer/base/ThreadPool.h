@@ -4,12 +4,12 @@
 #pragma once
 #include "CountDownLatch.h"
 #include "noncopyable.h"
-#include "Channel.h"
 #include "Thread.h"
 #include <pthread.h>
 #include <functional>
 #include <memory>
 #include <vector>
+#include <string>
 
 class ThreadPool : noncopyable
 {
@@ -30,6 +30,6 @@ class ThreadPool : noncopyable
   Condition cond_;
   string name_;
   std::vector<Thread> threads_;
-  std::deque<ThreadPoolTask> queue_;
+  std::deque<Task> queue_;
   bool running_;
 };

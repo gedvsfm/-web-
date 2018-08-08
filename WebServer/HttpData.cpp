@@ -11,7 +11,7 @@
 #include <iostream>
 using namespace std;
 
-pthread_once_t MimeType::once_control = PTHREAD_ONCE_INIT;
+pthread_once_t MimeType::once_control = PTHREAD_ONCE_INIT;//本函数使用初值为PTHREAD_ONCE_INIT的once_control变量保证init_routine()函数在本进程执行序列中仅执行一次
 std::unordered_map<std::string, std::string> MimeType::mime;
 
 
@@ -112,7 +112,7 @@ void MimeType::init()
 
 std::string MimeType::getMime(const std::string &suffix)
 {
-    pthread_once(&once_control, MimeType::init);
+    pthread_once(&once_control, MimeType::init);//该函数仅执行一次
     if (mime.find(suffix) == mime.end())
         return mime["default"];
     else
