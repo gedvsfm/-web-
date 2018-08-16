@@ -20,7 +20,7 @@ public:
 private:
     EventLoop *loop_;
     int threadNum_;
-    std::unique_ptr<EventLoopThreadPool> eventLoopThreadPool_;
+    std::unique_ptr<EventLoopThreadPool> eventLoopThreadPool_;//Ö÷reactor
     bool started_;
     std::shared_ptr<Channel> acceptChannel_;
     int port_;

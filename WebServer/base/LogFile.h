@@ -15,15 +15,15 @@ public:
     LogFile(const std::string& basename, int flushEveryN = 1024);
     ~LogFile();
 
-    void append(const char* logline, int len);
-    void flush();
+    void append(const char* logline, int len);//添加到缓存区
+    void flush();//清空缓冲区
     bool rollFile();
 
 private:
-    void append_unlocked(const char* logline, int len);
+    void append_unlocked(const char* logline, int len);//不加锁的方式添加
 
     const std::string basename_;
-    const int flushEveryN_;
+    const int flushEveryN_;//是否写入日志文件
 
     int count_;
     std::unique_ptr<MutexLock> mutex_;

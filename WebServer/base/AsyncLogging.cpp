@@ -26,7 +26,7 @@ AsyncLogging::AsyncLogging(std::string logFileName_,int flushInterval)
     buffers_.reserve(16);
 }
 
-void AsyncLogging::append(const char* logline, int len)
+void AsyncLogging::append(const char* logline, int len)//Ç°¶Ë
 {
     MutexLockGuard lock(mutex_);
     if (currentBuffer_->avail() > len)
@@ -44,7 +44,7 @@ void AsyncLogging::append(const char* logline, int len)
     }
 }
 
-void AsyncLogging::threadFunc()
+void AsyncLogging::threadFunc()//ºó¶Ë
 {
     assert(running_ == true);
     latch_.countDown();

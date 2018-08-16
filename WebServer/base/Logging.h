@@ -27,7 +27,7 @@ public:
     }
 
 private:
-    class Impl
+    class Impl//实际实现类
     {
     public:
         Impl(const char *fileName, int line);

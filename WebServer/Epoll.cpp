@@ -38,7 +38,7 @@ void Epoll::epoll_add(SP_Channel request, int timeout)
     int fd = request->getFd();
     if (timeout > 0)
     {
-        add_timer(request, timeout);
+        add_timer(request, timeout);//处理超时
         fd2http_[fd] = request->getHolder();
     }
     struct epoll_event event;
@@ -110,7 +110,7 @@ std::vector<SP_Channel> Epoll::poll()
     }
 }
 
-void Epoll::handleExpired()
+void Epoll::handleExpired()//处理超时事件
 {
     timerManager_.handleExpiredEvent();
 }

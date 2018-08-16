@@ -12,7 +12,7 @@ const int kSmallBuffer = 4000;
 const int kLargeBuffer = 4000 * 1000;
 
 template<int SIZE> 
-class FixedBuffer: noncopyable
+class FixedBuffer: noncopyable //输出到的缓冲区
 {
 public:
     FixedBuffer()
@@ -38,15 +38,16 @@ public:
     int avail() const { return static_cast<int>(end() - cur_); }
     void add(size_t len) { cur_ += len; }
 
-    void reset() { cur_ = data_; }
+    void reset() { cur_ = data_; }//重复利用
     void bzero() { memset(data_, 0, sizeof data_); }
 
 
 private:
-    const char* end() const { return data_ + sizeof data_; }
+    const char* end() const { return data_ + sizeof data_; }//最后一个位置的下一个位置
 
-    char data_[SIZE];
-    char* cur_;
+    char data_[SIZE];//缓冲区
+
+    char* cur_;//指向data_当前可以放置的位置
 };
 
 

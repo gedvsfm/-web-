@@ -14,7 +14,7 @@ EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseLoop, int numThreads)
         abort();
     }
 }
-
+//mainreactor运行
 void EventLoopThreadPool::start()
 {
     baseLoop_->assertInLoopThread();
@@ -26,7 +26,7 @@ void EventLoopThreadPool::start()
         loops_.push_back(t->startLoop());
     }
 }
-
+//获取下一个evenloop
 EventLoop *EventLoopThreadPool::getNextLoop()
 {
     baseLoop_->assertInLoopThread();

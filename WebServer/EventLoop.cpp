@@ -120,7 +120,7 @@ void EventLoop::loop()
             it->handleEvents();
         eventHandling_ = false;
         doPendingFunctors();
-        poller_->handleExpired();
+        poller_->handleExpired();//¥¶¿Ì≥¨ ±
     }
     looping_ = false;
 }
