@@ -29,7 +29,7 @@ void ThreadPool::start(int numThreads)
     char id[32];
     snprintf(id, sizeof id, "%d", i);
     threads_.push_back(new muduo::Thread(
-          boost::bind(&ThreadPool::runInThread, this), name_+id));
+          bind(&ThreadPool::runInThread, this), name_+id));
     threads_[i].start();
   }
 }
@@ -43,7 +43,7 @@ void ThreadPool::stop()
   }
   for_each(threads_.begin(),
            threads_.end(),
-           boost::bind(Thread::join, _1));
+           bind(Thread::join, _1));
 }
 
 void ThreadPool::run(const Task& task)
